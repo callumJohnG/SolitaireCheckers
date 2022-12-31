@@ -3,12 +3,17 @@ public class PegSolver{
     private PegSolitaire pegSolitaire;
     private List<SolverNode> tree;
 
+    private long startTime;
+    private long endTime;
+
     public PegSolver(PegSolitaire pegSolitaire){
         this.pegSolitaire = pegSolitaire;
         tree = new List<SolverNode>();
     }
 
     public void Solve(){
+        startTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+
         //Create the root node
         SolverNode? currentNode = CreateNextNode();
         tree.Add(currentNode);
@@ -56,7 +61,8 @@ public class PegSolver{
     }
 
     private void DisplayWin(){
-        Console.WriteLine("========SOLUTION FOUND===========");
+        endTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+        long timeTaken = endTime - startTime;
         
         List<char[,]> boardHistory = new List<char[,]>();
         int currentIndex = 0;
@@ -74,9 +80,13 @@ public class PegSolver{
         while(true){
             
             Console.Clear();
+
+            Console.WriteLine("========SOLUTION FOUND===========");
+            Console.WriteLine("(Took " + timeTaken + "ms to find solution)");
+
             char[,] currentBoard = boardHistory[currentIndex];
 
-            Console.WriteLine("---------Move " + (currentIndex+1) + "----------");
+            Console.WriteLine("---------Move " + currentIndex + "----------");
             pegSolitaire.PrintBoard(currentBoard);
 
             Console.WriteLine("\n(N)ext, (P)revious, (Q)uit");

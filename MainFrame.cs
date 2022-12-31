@@ -7,7 +7,17 @@ class MainFrame
     {
 
         Console.WriteLine("Welcome to chinese checkers!");
-        Console.WriteLine("Do you want to play? (P)");
+
+        Console.WriteLine("\nRULES:");
+        Console.WriteLine("Each turn, choose a peg and move it");
+        Console.WriteLine("Pegs move by jumping over a neighboring peg and occupying the empty space on the other side");
+        Console.WriteLine("Pegs can only jump over 1 other peg");
+        Console.WriteLine("Pegs can only move by jumping over another peg");
+        Console.WriteLine("When a peg jumps over another peg, the peg it jumped over is removed from the board");
+        Console.WriteLine("To win the game, there must only be one peg remaining");
+        Console.WriteLine("and it must be in the very center position in the board");
+
+        Console.WriteLine("\nDo you want to play? (P)");
         Console.WriteLine("Or run the solver? (S)");
         string? result = Console.ReadLine();
         if(result?.ToLower() == "p"){
@@ -32,7 +42,7 @@ class MainFrame
 
             try{
                 Console.WriteLine("\nEnter Coords\n");
-                Console.WriteLine("(Enter 'B' to go back 1 move");
+                Console.WriteLine("(Enter 'B' to go back 1 move)");
                 Console.WriteLine("From  - To");
                 Console.WriteLine("(x,y x,y)\n");
                 string? result = Console.ReadLine();
