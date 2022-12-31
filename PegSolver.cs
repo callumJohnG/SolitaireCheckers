@@ -11,26 +11,35 @@ public class PegSolver{
         tree = new List<SolverNode>();
     }
 
-    public void Solve(){
+    private List<char[,]> allSolutions = new List<char[,]>();
+
+    public void Solve(bool findAll){
         startTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 
         //Create the root node
         SolverNode? currentNode = CreateNextNode();
         tree.Add(currentNode);
-        Console.WriteLine(currentNode.ToString());
+        //Console.WriteLine(currentNode.ToString());
 
 
         //Start solving the board
         while(true){
 
             //Check if our current solver node has any moves to make
-            if(!currentNode.HasMoves()){
+            if(currentNode == null)break;
+            if(!(currentNode.HasMoves())){
                 //Node has no moves, step back in the tree
                 currentNode = StepBackInTree();
                 if(currentNode == null){
-                    //WE HAVE FAILED TO FIND A SOLUTION
-                    Console.WriteLine("FAILED TO FIND A SOLUTION");
-                    break;
+                    if(!findAll){
+                        //WE HAVE FAILED TO FIND A SOLUTION
+                        Console.WriteLine("Failed to find any solutions");
+                        break;
+                    } else {
+                        //Finished searching the tree
+                        DisplayAllResults();
+                        break;
+                    }
                 }
                 continue;
             }
@@ -50,8 +59,13 @@ public class PegSolver{
 
             //Check to see if we have won
             if(pegSolitaire.CheckWin()){
-                DisplayWin();
-                return;
+                allSolutions.Add((char[,])pegSolitaire.GetGameBoard().Clone());
+                if(!findAll){
+                    DisplayWin();
+                    return;
+                }
+                currentNode = StepBackInTree();
+                continue;
             }
 
             //Create the new solver node for this board state
@@ -105,7 +119,13 @@ public class PegSolver{
                 currentIndex = boardHistory.Count-1;
             }
         }
+    }
 
+    private void DisplayAllResults(){
+        endTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+        long timeTaken = endTime - startTime;
+        Console.WriteLine("======FOUND " + allSolutions.Count + " SOLUTIONS=====");
+        Console.WriteLine("(Took " + timeTaken + "ms to find all solutions)");
     }
 
     private SolverNode CreateNextNode(){

@@ -46,7 +46,7 @@ class MainFrame
                 Console.WriteLine("From  - To");
                 Console.WriteLine("(x,y x,y)\n");
                 string? result = Console.ReadLine();
-                if(result?.ToLower() == "B"){
+                if(result?.ToLower() == "b"){
                     if(pegSolitaire.StepBackHistory()){
                         moveCounter--;
                     }
@@ -80,9 +80,32 @@ class MainFrame
 
 
     private static void RunSolver(){
+        Console.Clear();
+        Console.WriteLine(@"
+             /$$$$$$   /$$$$$$  /$$    /$$    /$$ /$$$$$$$$ /$$$$$$$ 
+            /$$__  $$ /$$__  $$| $$   | $$   | $$| $$_____/| $$__  $$
+            | $$  \__/| $$  \ $$| $$   | $$   | $$| $$      | $$  \ $$
+            |  $$$$$$ | $$  | $$| $$   |  $$ / $$/| $$$$$   | $$$$$$$/
+            \____  $$| $$  | $$| $$    \  $$ $$/ | $$__/   | $$__  $$
+            /$$  \ $$| $$  | $$| $$     \  $$$/  | $$      | $$  \ $$
+            |  $$$$$$/|  $$$$$$/| $$$$$$$$\  $/   | $$$$$$$$| $$  | $$
+            \______/  \______/ |________/ \_/    |________/|__/  |__/"
+        );
+
+        Console.WriteLine("\n\nFind (O)ne solution, or (A)ll solutions?");
+        string? result = Console.ReadLine();
+        if(result?.ToLower() != "o" && result?.ToLower() != "a"){
+            RunSolver();
+        }
 
         PegSolver pegSolver = new PegSolver(pegSolitaire);
-        pegSolver.Solve();
+        if(result?.ToLower() == "o"){
+            pegSolver.Solve(false);
+        } else {
+            pegSolver.Solve(true);
+        }
+
+
 
     }
 

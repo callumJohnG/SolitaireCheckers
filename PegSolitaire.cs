@@ -74,7 +74,7 @@ public class PegSolitaire{
 
     public void MakeMove(int pegX, int pegY, int endX, int endY){
         if(!CheckMoveIsValid(pegX, pegY, endX, endY)){
-            Console.WriteLine("MOVE INVALID");
+            //Console.WriteLine("MOVE INVALID");
             return;
         }
 
