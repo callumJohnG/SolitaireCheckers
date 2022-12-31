@@ -9,10 +9,10 @@ class MainFrame
         Console.WriteLine("Welcome to chinese checkers!");
         Console.WriteLine("Do you want to play? (P)");
         Console.WriteLine("Or run the solver? (S)");
-        string result = Console.ReadLine();
-        if(result.ToLower() == "p"){
+        string? result = Console.ReadLine();
+        if(result?.ToLower() == "p"){
             GameLoop();
-        } else if (result.ToLower() == "s"){
+        } else if (result?.ToLower() == "s"){
             RunSolver();
         }
     }
@@ -32,20 +32,22 @@ class MainFrame
 
             try{
                 Console.WriteLine("\nEnter Coords\n");
-                Console.WriteLine("x,y x,y\n");
-                string result = Console.ReadLine();
-                if(result == "B"){
+                Console.WriteLine("(Enter 'B' to go back 1 move");
+                Console.WriteLine("From  - To");
+                Console.WriteLine("(x,y x,y)\n");
+                string? result = Console.ReadLine();
+                if(result?.ToLower() == "B"){
                     if(pegSolitaire.StepBackHistory()){
                         moveCounter--;
                     }
                     continue;
                 }
 
-                string[] results = result.Split(' ');
-                pegX = Convert.ToInt32(results[0].Split(',')[1]) - 1;
-                pegY = Convert.ToInt32(results[0].Split(',')[0]) - 1;
-                endX = Convert.ToInt32(results[1].Split(',')[1]) - 1;
-                endY = Convert.ToInt32(results[1].Split(',')[0]) - 1;
+                string[]? results = result?.Split(' ');
+                pegX = Convert.ToInt32(results?[0].Split(',')[1]) - 1;
+                pegY = Convert.ToInt32(results?[0].Split(',')[0]) - 1;
+                endX = Convert.ToInt32(results?[1].Split(',')[1]) - 1;
+                endY = Convert.ToInt32(results?[1].Split(',')[0]) - 1;
             } catch {
                 Console.WriteLine("WRONG");
                 continue;    
@@ -55,12 +57,12 @@ class MainFrame
             moveCounter++;
 
             pegSolitaire.MakeMove(pegX, pegY, endX, endY);
-            bool won = pegSolitaire.CheckWin();
-            if(won){
+            if(pegSolitaire.CheckWin()){
                 Console.WriteLine("Congradulations! You win!");
                 break;
             } else if(pegSolitaire.CheckLoss()){
                 Console.WriteLine("Sorry! You lost! No more valid moves");
+                break;
             }
         }
 

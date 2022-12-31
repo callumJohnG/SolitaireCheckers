@@ -10,7 +10,7 @@ public class PegSolver{
 
     public void Solve(){
         //Create the root node
-        SolverNode currentNode = CreateNextNode();
+        SolverNode? currentNode = CreateNextNode();
         tree.Add(currentNode);
         Console.WriteLine(currentNode.ToString());
 
@@ -80,7 +80,7 @@ public class PegSolver{
             pegSolitaire.PrintBoard(currentBoard);
 
             Console.WriteLine("\n(N)ext, (P)revious, (Q)uit");
-            string result = Console.ReadLine().ToLower();
+            string? result = Console.ReadLine()?.ToLower();
             if(result == "n"){
                 currentIndex++;
             } else if(result == "p"){
@@ -108,7 +108,7 @@ public class PegSolver{
         return newNode;
     }
 
-    private SolverNode StepBackInTree(){
+    private SolverNode? StepBackInTree(){
         //Try to take a step back in the tree
         if(tree.Count <= 1){
             //The tree is empty
